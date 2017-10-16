@@ -1,5 +1,5 @@
 #!/usr/local/bin/zsh
-SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE:-$0"})"; pwd)
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE:-$0}")"; pwd)
 . $SCRIPT_DIR/elastic-conf.sh
 
 INDEX=zsh_history
