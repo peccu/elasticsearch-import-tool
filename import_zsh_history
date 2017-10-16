@@ -1,6 +1,9 @@
 #!/usr/local/bin/zsh
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE:-$0"})"; pwd)
+. $SCRIPT_DIR/elastic-conf.sh
 
-# curl -XPUT localhost:9200/zsh_history -d '{
+INDEX=zsh_history
+# curl ${ELASTIC_CURL_OPT[@]} -XPUT $ELASTIC_CURL_URL/$INDEX -d '{
 #   "mappings": {
 #     "command": {
 #       "properties": {
@@ -13,4 +16,7 @@
 
 source ~/.zshrc
 fc -R
-fc -l -i -D 1 | ruby zsh_history_to_json.rb | curl -s -XPOST localhost:9200/_bulk --data-binary @-
+fc -l -i -D 1 | \
+  ruby $SCRIPT_DIR/zsh_history_to_json.rb | \
+  curl -s ${ELASTIC_CURL_OPT[@]} -XPOST $ELASTIC_CURL_URL/_bulk --data-binary @- \
+  >/dev/null
