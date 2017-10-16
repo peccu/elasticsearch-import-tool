@@ -14,7 +14,7 @@ INDEX=zsh_history
 #   }
 # }'
 
-source ~/.zshrc
+source ~/.zshrc >/dev/null 2>/dev/null
 fc -R
 fc -l -i -D 1 | \
   ruby $SCRIPT_DIR/zsh_history_to_json.rb | \
