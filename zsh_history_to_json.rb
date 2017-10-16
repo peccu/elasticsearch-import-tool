@@ -10,12 +10,13 @@ def convert2seconds (time_str)
 end
 
 STDIN.each{|line|
-  if /^(\s*)(\d+)  (\d\d\d\d-\d\d-\d\d) (\d\d:\d\d)  (.*?)  (.*?)$/ =~ line
+  if /^(\s*)(\d+)  (\d\d\d\d-\d\d-\d\d) (\d\d:\d\d)  (.*?)  (.*?) (.*?)$/ =~ line
     id = $2.to_i
     m = {:id => id,
          :date => "#{$3} #{$4} +0900",
          :time => convert2seconds($5),
-         :command => $6}
+         :command => $6,
+         :line => "#{$6} #{$7}"}
     puts "{ \"index\" : { \"_index\" : \"zsh_history\", \"_type\" : \"command\", \"_id\" : \"#{id}\" } }"
     puts m.to_json
   end
